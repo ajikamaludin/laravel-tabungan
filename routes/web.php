@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,12 @@ Route::middleware(['auth'])->group(function () {
     // Setting
     Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('setting.update');
+
+    // Customer
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('customer.store');
+    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
 });
 
 Route::middleware('auth')->group(function () {

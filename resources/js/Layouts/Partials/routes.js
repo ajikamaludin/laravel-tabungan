@@ -34,8 +34,8 @@ export default [
         name: 'Nasabah',
         show: true,
         icon: HiUserCircle,
-        route: route('dashboard'),
-        active: 'dashboard',
+        route: route('customer.index'),
+        active: 'customer.index',
         permission: 'view-customer',
     },
     {

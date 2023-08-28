@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('code')->nullable();
+            $table->string('name')->nullable();
             $table->string('class')->nullable();
             $table->timestamp('dob')->nullable();
             $table->string('address')->nullable();
+            $table->decimal('balance', 24, 2)->default(0);
             $table->timestamps();
             $table->softDeletes();
+            $table->ulid('created_by')->nullable();
+            $table->ulid('updated_by')->nullable();
+            $table->ulid('deleted_by')->nullable();
         });
     }
 

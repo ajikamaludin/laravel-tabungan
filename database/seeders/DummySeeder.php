@@ -24,6 +24,7 @@ class DummySeeder extends Seeder
 
         Customer::create([
             'code' => '001',
+            'name' => 'Tono',
             'class' => '001',
             'dob' => now()->subYears(19),
             'address' => 'Alamat Lengkap',

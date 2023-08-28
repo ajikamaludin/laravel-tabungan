@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamp('date')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->ulid('created_by')->nullable();
+            $table->ulid('updated_by')->nullable();
+            $table->ulid('deleted_by')->nullable();
         });
     }
 
