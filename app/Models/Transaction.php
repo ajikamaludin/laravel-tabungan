@@ -16,12 +16,12 @@ class Transaction extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withTrashed();
     }
 
     public function record_customer_balance()
     {
-        $customer = Customer::find($this->customer_id);
+        $customer = Customer::withTrashed()->find($this->customer_id);
 
         if ($this->type == self::TYPE_DEBIT) {
             $customer->update(['balance' => $customer->balance + $this->amount]);
@@ -34,7 +34,7 @@ class Transaction extends Model
 
     public function restore_customer_balance()
     {
-        $customer = Customer::find($this->customer_id);
+        $customer = Customer::withTrashed()->find($this->customer_id);
 
         if ($this->type == self::TYPE_DEBIT) {
             $customer->update(['balance' => $customer->balance - $this->amount]);
