@@ -45,8 +45,8 @@ export default function SelectionInput(props) {
 
     const handleSelectItem = (item) => {
         setIsSelected(true)
-        onItemSelected(item.id)
-        setSelected(item.name)
+        onItemSelected(item)
+        setSelected(`${item.code} - ${item.name}`)
         setIsOpen(false)
     }
 
@@ -84,7 +84,7 @@ export default function SelectionInput(props) {
             .get(route('api.customer.index', { q: q, all: all }), {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + auth.user.jwt_token,
+                    // Authorization: 'Bearer ' + auth.user.jwt_token,
                 },
             })
             .then((response) => {
@@ -118,7 +118,7 @@ export default function SelectionInput(props) {
         if (itemSelected !== null) {
             const item = showItems.find((item) => item.id === itemSelected)
             if (item) {
-                setSelected(item.name)
+                setSelected(`${item.code} - ${item.name}`)
                 setIsSelected(true)
             }
             return
@@ -229,7 +229,7 @@ export default function SelectionInput(props) {
                                                         <div className="w-full items-center flex">
                                                             <div className="mx-2">
                                                                 <span>
-                                                                    {item.name}
+                                                                    {`${item.code} - ${item.name}`}
                                                                 </span>
                                                             </div>
                                                         </div>

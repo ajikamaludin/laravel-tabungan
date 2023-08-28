@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index(Request $request): Response
     {
-        $query = User::query()->with(['role']);
+        $query = User::query()->with(['role'])->where('role_id', '!=', null);
 
         if ($request->q) {
             $query->where('name', 'like', "%{$request->q}%");
@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|max:255',
         ]);
 

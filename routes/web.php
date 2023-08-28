@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/customers', [CustomerController::class, 'store'])->name('customer.store');
     Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
     Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
+    // Transaction
+    Route::get('/trx', [TransactionController::class, 'index'])->name('trx.index');
+    Route::get('/trx/create', [TransactionController::class, 'create'])->name('trx.create');
+    Route::post('/trx', [TransactionController::class, 'store'])->name('trx.store');
+    Route::delete('/trx/{trx}', [TransactionController::class, 'destroy'])->name('trx.destroy');
 });
 
 Route::middleware('auth')->group(function () {

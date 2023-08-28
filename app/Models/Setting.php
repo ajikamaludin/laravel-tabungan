@@ -16,4 +16,9 @@ class Setting extends Model
         'value',
         'type',
     ];
+
+    public static function getByKey($key)
+    {
+        return Setting::where('key', $key)->value('value');
+    }
 }

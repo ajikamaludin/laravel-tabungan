@@ -1,92 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import { router } from '@inertiajs/react'
-import { usePrevious } from 'react-use'
+import React from 'react'
+import { Link, router } from '@inertiajs/react'
 import { Head } from '@inertiajs/react'
 import { Button, Dropdown } from 'flowbite-react'
-import { HiPencil, HiTrash } from 'react-icons/hi'
+import { HiTrash } from 'react-icons/hi'
 import { useModalState } from '@/hooks'
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import Pagination from '@/Components/Pagination'
 import ModalConfirm from '@/Components/ModalConfirm'
-import FormModal from './FormModal'
-import SearchInput from '@/Components/SearchInput'
 import { formatIDR, hasPermission } from '@/utils'
 
-export default function Customer(props) {
+export default function Index(props) {
     const {
         query: { links, data },
         auth,
+        type,
     } = props
 
-    const [search, setSearch] = useState('')
-    const preValue = usePrevious(search)
-
     const confirmModal = useModalState()
-    const formModal = useModalState()
 
-    const toggleFormModal = (customer = null) => {
-        formModal.setData(customer)
-        formModal.toggle()
-    }
-
-    const handleDeleteClick = (customer) => {
-        confirmModal.setData(customer)
+    const handleDeleteClick = (trx) => {
+        confirmModal.setData(trx)
         confirmModal.toggle()
     }
 
     const onDelete = () => {
         if (confirmModal.data !== null) {
-            router.delete(route('customer.destroy', confirmModal.data.id))
+            router.delete(route('trx.destroy', confirmModal.data.id))
         }
     }
 
-    const params = { q: search }
-    useEffect(() => {
-        if (preValue) {
-            router.get(
-                route(route().current()),
-                { q: search },
-                {
-                    replace: true,
-                    preserveState: true,
-                }
-            )
-        }
-    }, [search])
-
-    const canCreate = hasPermission(auth, 'create-customer')
-    const canUpdate = hasPermission(auth, 'update-customer')
-    const canDelete = hasPermission(auth, 'delete-customer')
+    const canCreate = hasPermission(auth, 'create-transaction')
+    const canDelete = hasPermission(auth, 'delete-transaction')
 
     return (
         <AuthenticatedLayout
             auth={props.auth}
             errors={props.errors}
             flash={props.flash}
-            page={'Nasabah'}
-            action={''}
+            page={'Transaksi'}
+            action={+type === 0 ? 'Setor' : 'Tarik'}
         >
-            <Head title="Nasabah" />
+            <Head title="Transaksi" />
 
             <div>
                 <div className="mx-auto sm:px-6 lg:px-8 ">
                     <div className="p-6 overflow-hidden shadow-sm sm:rounded-lg bg-gray-200 dark:bg-gray-800 space-y-4">
                         <div className="flex justify-between">
                             {canCreate && (
-                                <Button
-                                    size="sm"
-                                    onClick={() => toggleFormModal()}
-                                >
-                                    Tambah
-                                </Button>
+                                <Link href={route('trx.create', { type })}>
+                                    <Button size="sm">Tambah</Button>
+                                </Link>
                             )}
-                            <div className="flex items-center">
-                                <SearchInput
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    value={search}
-                                />
-                            </div>
+                            <div className="flex items-center"></div>
                         </div>
                         <div className="overflow-auto">
                             <div>
@@ -109,19 +75,13 @@ export default function Customer(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                Kelas
+                                                Jumlah
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                Alamat
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="py-3 px-6"
-                                            >
-                                                Saldo
+                                                Tanggal
                                             </th>
                                             <th
                                                 scope="col"
@@ -130,30 +90,25 @@ export default function Customer(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((customer) => (
+                                        {data.map((trx) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={customer.id}
+                                                key={trx.id}
                                             >
                                                 <td
                                                     scope="row"
                                                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                                 >
-                                                    {customer.code}
+                                                    {trx.customer.code}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {customer.name}
+                                                    {trx.customer.name}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {customer.class}
+                                                    {formatIDR(trx.amount)}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {customer.address}
-                                                </td>
-                                                <td className="py-4 px-6">
-                                                    {formatIDR(
-                                                        customer.balance
-                                                    )}
+                                                    {trx.date}
                                                 </td>
                                                 <td className="py-4 px-6 flex justify-end">
                                                     <Dropdown
@@ -163,27 +118,11 @@ export default function Customer(props) {
                                                         dismissOnClick={true}
                                                         size={'sm'}
                                                     >
-                                                        {canUpdate && (
-                                                            <Dropdown.Item
-                                                                onClick={() =>
-                                                                    toggleFormModal(
-                                                                        customer
-                                                                    )
-                                                                }
-                                                            >
-                                                                <div className="flex space-x-1 items-center">
-                                                                    <HiPencil />
-                                                                    <div>
-                                                                        Ubah
-                                                                    </div>
-                                                                </div>
-                                                            </Dropdown.Item>
-                                                        )}
                                                         {canDelete && (
                                                             <Dropdown.Item
                                                                 onClick={() =>
                                                                     handleDeleteClick(
-                                                                        customer
+                                                                        trx
                                                                     )
                                                                 }
                                                             >
@@ -203,14 +142,13 @@ export default function Customer(props) {
                                 </table>
                             </div>
                             <div className="w-full flex items-center justify-center">
-                                <Pagination links={links} params={params} />
+                                <Pagination links={links} />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <ModalConfirm modalState={confirmModal} onConfirm={onDelete} />
-            <FormModal modalState={formModal} />
         </AuthenticatedLayout>
     )
 }

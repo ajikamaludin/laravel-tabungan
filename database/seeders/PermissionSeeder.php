@@ -38,13 +38,9 @@ class PermissionSeeder extends Seeder
             ['id' => Str::ulid(), 'label' => 'View Nasabah', 'name' => 'view-customer'],
             ['id' => Str::ulid(), 'label' => 'Delete Nasabah', 'name' => 'delete-customer'],
 
-            ['id' => Str::ulid(), 'label' => 'Create Setoran', 'name' => 'create-debit'],
-            ['id' => Str::ulid(), 'label' => 'View Setoran', 'name' => 'view-debit'],
-            ['id' => Str::ulid(), 'label' => 'Delete Setoran', 'name' => 'delete-debit'],
-
-            ['id' => Str::ulid(), 'label' => 'Create Penarikan', 'name' => 'create-credit'],
-            ['id' => Str::ulid(), 'label' => 'View Penarikan', 'name' => 'view-credit'],
-            ['id' => Str::ulid(), 'label' => 'Delete Penarikan', 'name' => 'delete-credit'],
+            ['id' => Str::ulid(), 'label' => 'Create Transaksi', 'name' => 'create-transaction'],
+            ['id' => Str::ulid(), 'label' => 'View Transaksi', 'name' => 'view-transaction'],
+            ['id' => Str::ulid(), 'label' => 'Delete Transaksi', 'name' => 'delete-transaction'],
         ];
 
         foreach ($permissions as $permission) {

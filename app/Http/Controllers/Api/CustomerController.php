@@ -13,7 +13,8 @@ class CustomerController extends Controller
         $query = Customer::query();
 
         if ($request->q) {
-            $query->where('name', 'like', "%{$request->q}%");
+            $query->where('name', 'like', "%{$request->q}%")
+                ->orWhere('code', 'like', "%{$request->q}%");
         }
 
         if ($request->except_id) {

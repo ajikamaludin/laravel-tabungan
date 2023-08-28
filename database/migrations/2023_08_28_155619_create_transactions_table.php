@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->ulid('customer_id')->nullable();
+            $table->smallInteger('type')->default(0);
             $table->decimal('amount', 20, 2)->default(0);
             $table->timestamp('date')->nullable();
             $table->timestamps();

@@ -12,4 +12,9 @@ class Customer extends Model
         'address',
         'balance',
     ];
+
+    public function trxs()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
