@@ -3,6 +3,7 @@
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Role
     Route::resource('/roles', RoleController::class);
+
+    // Setting
+    Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
+    Route::post('/settings', [SettingController::class, 'update'])->name('setting.update');
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,4 +46,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
