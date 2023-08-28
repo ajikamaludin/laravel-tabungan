@@ -1,6 +1,6 @@
-# Laravel Template - Flowbite
+# Tabungan App
 
-This just a laravel template with breeze react, user role based access crud with setup flowbite admin template
+tabungan app adalah sebuah aplikasi untuk merecord data nasabah dan traksaksi tarik dan setor tunai untuk nasabah
 
 ## Support me
 
@@ -57,7 +57,14 @@ password : password
 npm run build
 ```
 
-## TODO
+# Rsync
 
--   [ ] add dark mode
--   [ ] add default setting (app name)
+```bash
+rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=database/database.sqlite --exclude=.git --exclude=.env --exclude=public/hot . arm@ajikamaludin.id:/home/arm/projects/www/tabungan
+```
+
+# ZIP
+
+```bash
+zip --exclude='*.git*' --exclude='*node_modules*' -r tabungan.zip .
+```
