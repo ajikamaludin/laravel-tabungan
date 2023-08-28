@@ -31,6 +31,37 @@ export default [
         permission: 'view-dashboard',
     },
     {
+        name: 'Nasabah',
+        show: true,
+        icon: HiUserCircle,
+        route: route('dashboard'),
+        active: 'dashboard',
+        permission: 'view-customer',
+    },
+    {
+        name: 'Transaksi',
+        show: true,
+        icon: HiCash,
+        items: [
+            {
+                name: 'Setor',
+                show: true,
+                icon: null,
+                route: route('roles.index'),
+                active: 'roles.*',
+                permission: 'view-debit',
+            },
+            {
+                name: 'Tarik',
+                show: true,
+                icon: null,
+                route: route('user.index'),
+                active: 'user.index',
+                permission: 'view-credit',
+            },
+        ],
+    },
+    {
         name: 'User',
         show: true,
         icon: HiUser,
