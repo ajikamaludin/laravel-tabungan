@@ -1,6 +1,6 @@
 # Tabungan App
 
-tabungan app adalah sebuah aplikasi untuk merecord data nasabah dan traksaksi tarik dan setor tunai untuk nasabah
+tabungan app adalah sebuah aplikasi untuk melakukan pencatatan data nasabah dan traksaksi tarik dan setor tunai untuk nasabah, cocok untuk studi kasus di TPA, TK atau SD
 
 ## Support me
 
@@ -57,14 +57,19 @@ password : password
 npm run build
 ```
 
-# Rsync
+## Screenshot
+
+![](screenshot1.png?raw=true)
+
+<hr/>
+<hr/>
+
+# Other
 
 ```bash
+#rsync
 rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=database/database.sqlite --exclude=.git --exclude=.env --exclude=public/hot . arm@ajikamaludin.id:/home/arm/projects/www/tabungan
-```
 
-# ZIP
-
-```bash
+#zip
 zip --exclude='*.git*' --exclude='*node_modules*' -r tabungan.zip .
 ```
